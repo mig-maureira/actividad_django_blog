@@ -1,6 +1,6 @@
 # actividad_django_blog
 
-1. Levantar un proyecto Django
+# 1. Levantar un proyecto Django
 
 Por lo que veo en tu archivo, este paso ya lo tienes parcialmente resuelto, ya que cuentas con tu archivo manage.py , la carpeta de configuración blog , y las aplicaciones posts y sesiones.
 
@@ -12,6 +12,8 @@ python manage.py startapp posts
 ```
 
 (Asegúrate de que la app posts esté agregada en la lista INSTALLED_APPS dentro de tu archivo blog/settings.py ). 2. Levantar una base de datos Postgres con credenciales
+
+# 2. Levantar una base de datos Postgres con credenciales
 
 Antes de conectar Django, necesitas que PostgreSQL esté corriendo en tu sistema o en un contenedor Docker.
 
@@ -28,7 +30,7 @@ Bash
 pip install psycopg2-binary
 ```
 
-3. Configurar el acceso en settings.py
+# 3. Configurar el acceso en settings.py
 
 Debes abrir el archivo blog/settings.py y buscar la variable DATABASES. Vamos a reemplazar la configuración actual de SQLite por las credenciales de tu nueva base de datos Postgres:
 Python
@@ -49,9 +51,9 @@ DATABASES = {
 
 ```
 
-4. Crear los modelos de datos en models.py
+# 4. Crear los modelos de datos en models.py
 
-Vamos a trabajar en el archivo posts/models.py. Aquí definiremos las clases Autor y Articulo, estableciendo una relación de "Uno a Muchos" (un autor puede tener muchos artículos).
+Aquí definiremos las clases Autor y Articulo, estableciendo una relación de "Uno a Muchos" (un autor puede tener muchos artículos).
 Python
 
 # posts/models.py
@@ -78,9 +80,7 @@ class Articulo(models.Model):
         return self.titulo
 ```
 
-5. Hacer la migración de datos
-
-Como tu proyecto ya tiene una carpeta posts/migrations y existen migraciones previas (como 0001_initial.py y 0002_post_categoria.py ), al ejecutar estos comandos Django detectará los nuevos modelos y creará las tablas correspondientes en Postgres:
+# 5. Hacer la migración de datos
 
 En tu terminal, ejecuta:
 
@@ -96,7 +96,7 @@ python manage.py makemigrations posts
 python manage.py migrate
 ```
 
-6. Crear entradas y realizar una consulta ORM
+# 6. Crear entradas y realizar una consulta ORM
 
 Para interactuar con la base de datos usando el ORM de Django, abriremos la consola interactiva (shell):
 
