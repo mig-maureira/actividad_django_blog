@@ -1,0 +1,102 @@
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom ">
+    <div class=" container">
+        <a class="navbar-brand fw-bold" href="{% url 'home'%}">
+            Mi Portfolio </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <!-- <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#habilidades">Habilidades</a></li>
+                <li class="nav-item"><a class="nav-link" href="#proyectos">Proyectos</a></li> -->
+                <li class="nav-item" data-bs-toggle="modal" data-bs-target="#contactoModal" style="cursor: pointer;">
+                    <div class="nav-link active">Contacto</div>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard_html'%}">
+                        administrar
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="nav-link text-warning" type="submit">
+                            Cerrar Sesión
+                        </button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvaslogin" role="button">
+                        Inicio de sesión
+                    </a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvaslogin" aria-labelledby="offcanvasloginLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasloginLabel">Acceso al Sistema</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Usuario</label>
+                <input type="text" name="username" class="form-control" id="username" placeholder="Tu usuario">
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="********">
+            </div>
+
+            <button type="submit" class="btn-skew w-100 mb-3">Entrar</button>
+        </form>
+        <p>¿No tienes cuenta? <a href="{% url 'register' %}">Regístrate</a></p>
+    </div>
+</div>
+
+<div class="modal fade" id="contactoModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content p-4">
+            <h3>Contacto</h3>
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" placeholder="Tu nombre">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" placeholder="nombre@ejemplo.com">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mensaje</label>
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+
+                <button type="button" class="btn btn-primary" data-bs-target="#contactoOkModal" data-bs-toggle="modal">
+                    Enviar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="contactoOkModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content p-4 text-center">
+            <h3 class="text-success">¡Mensaje enviado!</h3>
+            <p>Gracias por contactarme. Te responderé pronto.</p>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+</div>

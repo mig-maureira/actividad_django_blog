@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<main>
+    <section class="container-fluid d-flex flex-column justify-content-around align-items-center py-5">
+
+        {% for post in posts %}
+        <article class="row m-5 w-100">
+            <div class="d-flex align-items-center justify-content-center px-5 flex-wrap">
+
+                <div class="col-sm-3 mb-3 mb-sm-0 text-center">
+                    <img src="https://picsum.photos/400/300?random={{ post.id }}" class="img-fluid rounded shadow-sm"
+                        alt="Imagen de {{ post.titulo }}">
+                </div>
+
+                <div class="flex-grow-1 ms-sm-4 px-sm-4 col-sm-7">
+                    <h3>{{ post.titulo }}</h3>
+
+                    <h6 class="text-muted">{{ post.fecha_creacion|date:"d/m/Y" }}</h6>
+
+                    <h5><i class="fa-regular fa-user"></i> {{ post.autor.username }}</h5>
+
+                    <p class="mt-3">{{ post.contenido|truncatewords:30 }}</p>
+
+                    <a class="btn-skew mt-2" href="{% url 'detalle_post' post.id %}">Ver Más</a>
+                </div>
+
+            </div>
+        </article>
+
+        {% empty %}
+        <article class=" row m-5 text-center">
+            <h3>Todavía no hay Historias publicadas. ¡Vuelve más tarde!</h3>
+        </article>
+        {% endfor %}
+
+    </section>
+</main>
+{% endblock %}

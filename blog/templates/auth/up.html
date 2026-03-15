@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Editar Artículo: {{ post.titulo }}</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit" class="btn-skew">
+                    Actualizar
+                </button>
+            </form>
+        </div>
+        <div class="card-footer text-muted small">
+            Última actualización: {{ post.fecha_actualizacion|date:"d/m/Y H:i" }}
+        </div>
+    </div>
+</div>
+{% endblock %}

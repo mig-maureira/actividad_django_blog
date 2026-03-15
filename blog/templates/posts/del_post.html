@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger shadow">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0 h5">Confirmar Eliminación</h3>
+                </div>
+                <div class="card-body text-center">
+                    <p class="lead">¿Estás seguro de que deseas eliminar este artículo?</p>
+                    <div class="alert alert-secondary py-3">
+                        <strong class="d-block">{{ post.titulo }}</strong>
+                        <small class="text-muted">Categoría: {{ post.categoria }}</small>
+                    </div>
+                    <p class="text-danger small">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        Esta acción es permanente y no se puede deshacer.
+                    </p>
+                </div>
+                <div class="card-footer bg-light d-flex justify-content-between p-3">
+                    <a href="{% url 'home' %}" class="btn-skew_sec">
+                        Cancelar
+                    </a>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-skew_red px-4">
+                            Sí, eliminar definitivamente
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
