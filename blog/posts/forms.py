@@ -1,14 +1,8 @@
 from django import forms
-from .models import Post
+from .models import Articulo
 
 
-class PostForm(forms.ModelForm):
+class ArticuloForm(forms.ModelForm):
     class Meta:
-        model = Post
-        fields = ["titulo", "contenido", "categoria", "publicado"]
-        widgets = {
-            "titulo": forms.TextInput(attrs={"class": "form-control"}),
-            "contenido": forms.Textarea(attrs={"class": "form-control", "rows": 5}),
-            "categoria": forms.TextInput(attrs={"class": "form-control"}),
-            "publicado": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-        }
+        model = Articulo
+        fields = ["titulo", "contenido"]

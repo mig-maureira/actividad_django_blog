@@ -8,7 +8,7 @@
 
             <div class="mb-4">
                 <a class="btn btn-primary" href="{% url 'home' %}">Volver al Inicio</a>
-                <a class="btn btn-secondary" href="{% url 'crear_post'%}">Agregar Nuevo</a>
+                <a class="btn btn-secondary" href="{% url 'crear_articulo' %}">Agregar Nuevo</a>
             </div>
 
             <h4>Bienvenido {{ user.username }}</h4>
@@ -23,15 +23,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for post in posts %}
+                    {% for articulo in articulos %}
                     <tr>
-                        <td>{{ post.id }}</td>
-                        <td>{{ post.titulo }}</td>
-                        <td>{{ post.fecha_creacion|date:"d/m/y" }}</td>
+                        <td>{{ articulo.id }}</td>
+                        <td>{{ articulo.titulo }}</td>
+                        <td>{{ articulo.fecha_publicacion|date:"d/m/y" }}</td>
                         <td>
-                            <a href="{% url 'detalle_post' post.id %}" class="btn btn-primary btn-sm">Ver</a>
-                            <a href="{% url 'upd_post' post.id %}" class="btn btn-primary btn-sm">Editar</a>
-                            <a href="{% url 'del_post' post.id %}" class="btn btn-danger btn-sm">Borrar</a>
+                            <a href="{% url 'detalle_articulo' articulo.id %}" class="btn btn-primary btn-sm">Ver</a>
+                            <a href="{% url 'editar_articulo' articulo.id %}" class="btn btn-primary btn-sm">Editar</a>
+                            <a href="{% url 'eliminar_articulo' articulo.id %}" class="btn btn-danger btn-sm">Borrar</a>
                         </td>
                     </tr>
                     {% empty %}

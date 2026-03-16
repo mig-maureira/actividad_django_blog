@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
-{% block title %}{{ post.titulo }}{% endblock %}
+{% block title %}{{ articulo.titulo }}{% endblock %}
 
 {% block content %}
 <header class="hero-section" style="background-image: url('');">
     <div class="hero-overlay"></div>
     <div class="container hero-content text-center animate-fade-in">
-        <span class="badge bg-warning text-dark mb-3">{{ post.categoria }}</span>
-        <h1 class="display-3 fw-bold">{{ post.titulo }}</h1>
-        <p class="lead">Publicado el {{post.fecha_creacion|date:"d M, Y"}} por {{post.autor}}</p>
+        <span class="badge bg-warning text-dark mb-3">{{ articulo.categoria }}</span>
+        <h1 class="display-3 fw-bold">{{ articulo.titulo }}</h1>
+        <p class="lead">Publicado el {{ articulo.fecha_publicacion|date:"d M, Y" }} por {{ articulo.autor.nombre }}</p>
     </div>
 </header>
 
@@ -17,7 +17,7 @@
         <div class="col-lg-8">
 
             <div class="post-body mb-5">
-                {{ post.contenido|safe }}
+                {{ articulo.contenido|safe }}
             </div>
 
             <hr>
@@ -40,7 +40,7 @@
             </div>
 
             <div class="mt-4">
-                {% for tag in post.tags.all %}
+                {% for tag in articulo.tags.all %}
                 <span class="text-muted small">#{{ tag.name }}</span>
                 {% endfor %}
             </div>
@@ -54,24 +54,24 @@
                 </h4>
 
                 <div class="list-group list-group-flush">
-                    {% for other_post in recent_posts %}
-                    {% if other_post.id != post.id %}
-                    <a href="{{ other_post.get_absolute_url }}"
+                    {% for otro_articulo in articulos_recientes %}
+                    {% if otro_articulo.id != articulo.id %}
+                    <a href="{% url 'detalle_articulo' otro_articulo.id %}"
                         class="list-group-item list-group-item-action border-0 px-0 py-3">
                         <div class="d-flex align-items-center">
-                            {% if other_post.image %}
+                            {% if otro_articulo.image %}
                             <img src="" class="rounded me-3" style="width: 70px; height: 70px; object-fit: cover;"
-                                alt="{{ other_post.title }}">
+                                alt="{{ otro_articulo.titulo }}">
                             {% endif %}
                             <div>
-                                <h6 class="mb-1 fw-bold text-dark">{{ other_post.titulo }}</h6>
-                                <small class="text-muted">{{ other_post.autor|date:"d M" }}</small>
+                                <h6 class="mb-1 fw-bold text-dark">{{ otro_articulo.titulo }}</h6>
+                                <small class="text-muted">{{ otro_articulo.fecha_publicacion|date:"d M" }}</small>
                             </div>
                         </div>
                     </a>
                     {% endif %}
                     {% empty %}
-                    <p class="text-muted small">No hay más posts por ahora.</p>
+                    <p class="text-muted small">No hay más artículos por ahora.</p>
                     {% endfor %}
                 </div>
 

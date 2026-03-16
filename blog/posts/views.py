@@ -1,69 +1,71 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post
-from .forms import PostForm
+from .models import Autor, Articulo
+from .forms import ArticuloForm
 
 
 @login_required
-def crear_post(request):
+def crear_articulo(request):
+
+    autor, created = Autor.objects.get_or_create(
+        usuario=request.user,
+        defaults={"nombre": request.user.username, "correo": request.user.email},
+    )
+
     if request.method == "POST":
         titulo = request.POST.get("titulo")
         contenido = request.POST.get("contenido")
 
-        Post.objects.create(titulo=titulo, contenido=contenido, autor=request.user)
+        Articulo.objects.create(titulo=titulo, contenido=contenido, autor=autor)
 
         return redirect("dashboard_html")
 
-    return render(request, "posts/crear_post.html")
+    return render(request, "articulos/crear_articulos.html")
 
 
 @login_required
-def editar_post(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def editar_articulo(request, articulo_id):
+    articulo = get_object_or_404(Articulo, pk=articulo_id)
 
-    # impedir editar posts de otros usuarios
-    if post.autor != request.user:
+    # impedir editar artículos de otros autores
+    if articulo.autor.usuario != request.user:
         return redirect("home")
 
-    form = PostForm(request.POST or None, instance=post)
+    form = ArticuloForm(request.POST or None, instance=articulo)
 
     if form.is_valid():
         form.save()
-        return redirect("detalle_post", post_id=post.id)
+        return redirect("detalle_articulo", articulo_id=articulo.id)
 
-    return render(request, "posts/upd_post.html", {"form": form, "post": post})
+    return render(
+        request, "articulos/upd_articulos.html", {"form": form, "articulo": articulo}
+    )
 
 
 @login_required
-def eliminar_post(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
+def eliminar_articulo(request, articulo_id):
+    articulo = get_object_or_404(Articulo, id=articulo_id)
 
     es_editor = request.user.groups.filter(name="editor").exists()
-    es_autor = post.autor == request.user
+    es_autor = articulo.autor.usuario == request.user
 
-    # Solo puede borrar si es autor o editor
     if not (es_autor or es_editor):
         return redirect("home")
 
     if request.method == "POST":
-        post.delete()
+        articulo.delete()
         return redirect("home")
 
-    return render(request, "posts/del_post.html", {"post": post})
+    return render(request, "articulos/del_articulos.html", {"articulo": articulo})
 
 
-def detalle_post(request, post_id):
-    # 1. Buscamos el post principal
-    post = get_object_or_404(Post, id=post_id)
-
-    # 2. Traemos otros 5 posts (excluyendo el actual)
-    recent_posts = Post.objects.exclude(id=post.id).order_by("-fecha_creacion")[:5]
+def detalle_articulo(request, articulo_id):
+    articulo = get_object_or_404(Articulo, id=articulo_id)
+    # Traemos por ejemplo los últimos 5 artículos
+    articulos_recientes = Articulo.objects.all().order_by("-fecha_publicacion")[:5]
 
     return render(
         request,
-        "posts/single.html",
-        {
-            "post": post,
-            "recent_posts": recent_posts,
-        },
+        "articulos/single.html",
+        {"articulo": articulo, "articulos_recientes": articulos_recientes},
     )

@@ -4,7 +4,7 @@
 <div class="container mt-5">
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
-            <h2 class="mb-0">Editar Artículo: {{ post.titulo }}</h2>
+            <h2 class="mb-0">Editar Artículo: {{ articulo.titulo }}</h2>
         </div>
         <div class="card-body">
             <form method="POST" novalidate>
@@ -34,13 +34,13 @@
                 <hr>
 
                 <div class="d-flex justify-content-between">
-                    <a href="{% url 'detalle_post' post.pk %}" class="btn btn-secondary">Cancelar</a>
+                    <a href="{% url 'dashboard_html' %}" class="btn btn-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-success px-4">Guardar Cambios</button>
                 </div>
             </form>
         </div>
         <div class="card-footer text-muted small">
-            Última actualización: {{ post.fecha_actualizacion|date:"d/m/Y H:i" }}
+            Última actualización: {{ articulo.fecha_publicacion|date:"d/m/Y H:i" }}
         </div>
     </div>
 </div>

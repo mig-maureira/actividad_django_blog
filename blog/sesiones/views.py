@@ -4,12 +4,17 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 
 from .forms import LoginForm, RegisterForm
-from posts.models import Post
+
+# CAMBIO 1: Importamos 'Articulo' en lugar de 'Post'
+from posts.models import Articulo
 
 
 def landing(request):
-    posts = Post.objects.all()
-    return render(request, "home.html", {"posts": posts})
+    # CAMBIO 2: Usamos Articulo y los ordenamos desde el más reciente
+    articulos = Articulo.objects.all().order_by("-fecha_publicacion")
+
+    # CAMBIO 3: Pasamos la clave 'articulos' para que coincida con tu nuevo home.html
+    return render(request, "home.html", {"articulos": articulos})
 
 
 def login_view(request):
@@ -39,8 +44,11 @@ def register_view(request):
 
 @login_required
 def dashboard(request):
-    posts = Post.objects.all()
-    return render(request, "auth/dashboard.html", {"posts": posts})
+    # CAMBIO 4: Actualizamos también el dashboard para que use Articulo
+    articulos = Articulo.objects.all().order_by("-fecha_publicacion")
+
+    # CAMBIO 5: Pasamos la clave 'articulos' al contexto
+    return render(request, "auth/dashboard.html", {"articulos": articulos})
 
 
 @login_required

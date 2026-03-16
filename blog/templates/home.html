@@ -5,25 +5,25 @@
 <main>
     <section class="container-fluid d-flex flex-column justify-content-around align-items-center py-5">
 
-        {% for post in posts %}
+        {% for articulo in articulos %}
         <article class="row m-5 w-100">
             <div class="d-flex align-items-center justify-content-center px-5 flex-wrap">
 
                 <div class="col-sm-3 mb-3 mb-sm-0 text-center">
-                    <img src="https://picsum.photos/400/300?random={{ post.id }}" class="img-fluid rounded shadow-sm"
-                        alt="Imagen de {{ post.titulo }}">
+                    <img src="https://picsum.photos/400/300?random={{ articulo.id }}"
+                        class="img-fluid rounded shadow-sm" alt="Imagen de {{ articulo.titulo }}">
                 </div>
 
                 <div class="flex-grow-1 ms-sm-4 px-sm-4 col-sm-7">
-                    <h3>{{ post.titulo }}</h3>
+                    <h3>{{ articulo.titulo }}</h3>
 
-                    <h6 class="text-muted">{{ post.fecha_creacion|date:"d/m/Y" }}</h6>
+                    <h6 class="text-muted">{{ articulo.fecha_publicacion|date:"d/m/Y" }}</h6>
 
-                    <h5><i class="fa-regular fa-user"></i> {{ post.autor.username }}</h5>
+                    <h5><i class="fa-regular fa-user"></i> {{ articulo.autor.nombre }}</h5>
 
-                    <p class="mt-3">{{ post.contenido|truncatewords:30 }}</p>
+                    <p class="mt-3">{{ articulo.contenido|truncatewords:30 }}</p>
 
-                    <a class="btn-skew mt-2" href="{% url 'detalle_post' post.id %}">Ver Más</a>
+                    <a class="btn-skew mt-2" href="{% url 'detalle_articulo' articulo.id %}">Ver Más</a>
                 </div>
 
             </div>
@@ -31,7 +31,7 @@
 
         {% empty %}
         <article class=" row m-5 text-center">
-            <h3>Todavía no hay Historias publicadas. ¡Vuelve más tarde!</h3>
+            <h3>Todavía no hay Artículos publicados. ¡Vuelve más tarde!</h3>
         </article>
         {% endfor %}
 
